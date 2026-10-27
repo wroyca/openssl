@@ -63,6 +63,11 @@ lib{crypto}: crypto/c{LPdir_* des/ncbc_enc}:                    include = adhoc
 lib{crypto}: \
   providers/implementations/storemgmt/c{winstore_store}:        include = $windows
 
+# Note that the default provider implementations include the FIPS indicator
+# header from the otherwise excluded FIPS provider.
+#
+lib{crypto}: providers/fips/include/fips/h{fipsindicator}
+
 lib{crypto}: $imp_libs
 
 # Symlinked where appropriate.
