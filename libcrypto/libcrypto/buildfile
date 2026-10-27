@@ -52,7 +52,8 @@ lib{crypto}: {h      }{**               -buildinf-body -providers/**} \
                                         -mdc2/**                      \
                                         -poly1305/poly1305_ieee754    \
                                         -poly1305/poly1305_base2_44   \
-                                        -rsa/rsa_acvp_test_params   }
+                                        -rsa/rsa_acvp_test_params     \
+                                        -x509/x509_def              }
 
 lib{crypto}: engines/c{e_afalg}:                                include = $linux
 lib{crypto}: engines/c{e_afalg_err e_capi_err}:                 include = adhoc
@@ -198,6 +199,12 @@ providers/ c.poptions =+ "-I$src_root/libcrypto/crypto" \
 # Also note that for the crypto/obj{cversion} target we instead need to leave
 # OPENSSLDIR, ENGINESDIR, and MODULESDIR undefined not to break strings used
 # by the OpenSSL_version() function (see crypto/cversion.c for details).
+#
+# Finally, note that on Windows upstream appends the suffixes to OPENSSLDIR at
+# runtime rather than at the preprocessing time, which for the empty string
+# would end up with the default paths referring to the current drive root
+# (\cert.pem, etc). Thus, we patch crypto/x509/x509_def.c to leave such paths
+# empty (see downstream/crypto/x509/x509_def.c.patch for details).
 #
 ns = $regex.apply({**.c -crypto/cversion.c}, '.c$', '')
 
