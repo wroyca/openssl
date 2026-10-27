@@ -3,7 +3,7 @@ name: openssl
 
 # Note: remember to update doc-url below!
 #
-version: 3.3.1
+version: 3.5.9-a.0.z
 
 summary: Command line tool providing various cryptography functions
 license: Apache-2.0 ; Apache License 2.0.
